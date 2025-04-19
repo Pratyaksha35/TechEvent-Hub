@@ -1,9 +1,15 @@
-
 import { EventType } from "@/components/events/EventCard";
 
-// Mock data for events
-export const mockEvents: EventType[] = [
-  {
+// Get scraped events from localStorage or use fallback mock data
+const getSavedEvents = (): EventType[] => {
+  const savedEvents = localStorage.getItem('scraped_events');
+  if (savedEvents) {
+    return JSON.parse(savedEvents);
+  }
+  
+  // Fallback to original mock data if no scraped data exists
+  return [
+    {
     id: "1",
     title: "AI Developer Summit 2025",
     description: "Join the largest gathering of AI engineers and researchers to discuss the latest advancements in artificial intelligence and machine learning.",
@@ -91,7 +97,11 @@ export const mockEvents: EventType[] = [
     image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80&w=2944&ixlib=rb-4.0.3",
     relevanceScore: 0.79,
   }
-];
+  ];
+};
+
+// Export the events from localStorage or fallback data
+export const mockEvents: EventType[] = getSavedEvents();
 
 // Function to get recommended events based on user preferences
 export const getRecommendedEvents = (userId: string): EventType[] => {

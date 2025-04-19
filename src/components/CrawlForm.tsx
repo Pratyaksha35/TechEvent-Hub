@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { FirecrawlService } from '@/utils/FirecrawlService';
 import { Card } from "@/components/ui/card";
+import { EventType } from '@/components/events/EventCard';
 import {
   Table,
   TableBody,
@@ -30,6 +31,20 @@ export const CrawlForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [crawlResult, setCrawlResult] = useState<CrawlResult | null>(null);
+
+  const transformToEvent = (item: any): EventType => {
+    return {
+      id: crypto.randomUUID(),
+      title: item.title || 'Untitled Event',
+      description: item.content || 'No description available',
+      date: new Date().toLocaleDateString(), // You might want to extract date from content
+      time: '9:00 AM - 5:00 PM', // Default time if not available
+      location: 'Location TBD', // You might want to extract location from content
+      category: [item.type || 'Tech'],
+      image: 'https://images.unsplash.com/photo-1591453089816-0fbb971b454c?auto=format&fit=crop&q=80&w=2940&ixlib=rb-4.0.3',
+      relevanceScore: 0.85
+    };
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,6 +74,17 @@ export const CrawlForm = () => {
           duration: 3000,
         });
         setCrawlResult(result.data);
+        
+        // Transform and store the scraped data
+        if (result.data.data && result.data.data.length > 0) {
+          const events = result.data.data.map(transformToEvent);
+          localStorage.setItem('scraped_events', JSON.stringify(events));
+          toast({
+            title: "Data Saved",
+            description: `${events.length} events have been saved`,
+            duration: 3000,
+          });
+        }
       } else {
         toast({
           title: "Error",
