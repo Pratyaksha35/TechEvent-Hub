@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -11,6 +10,7 @@ import Recommended from "./pages/Recommended";
 import UserProfile from "./pages/UserProfile";
 import Preferences from "./pages/Preferences";
 import NotFound from "./pages/NotFound";
+import Scraper from "./pages/Scraper";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +27,7 @@ const App = () => (
           <Route path="/recommended" element={<Recommended />} />
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/preferences" element={<Preferences />} />
+          <Route path="/scraper" element={<Scraper />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
