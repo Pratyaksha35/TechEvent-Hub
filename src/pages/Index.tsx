@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -32,10 +31,10 @@ export default function Index() {
           <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=2940&q=80')] bg-cover bg-center mix-blend-overlay"></div>
           <div className="container relative z-10 mx-auto px-4 text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-              Find Events <span className="text-purple-300">That Truly Match</span> Your Interests
+              Find Tech Events <span className="text-purple-300">That Truly Match</span> Your Interests
             </h1>
             <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-purple-100">
-              Our AI-powered recommendation engine analyzes your preferences to find events you'll love.
+              Our AI-powered recommendation engine analyzes your preferences to find tech events you'll love.
             </p>
             <div className="max-w-xl mx-auto mb-10">
               <div className="flex flex-col sm:flex-row gap-4">
@@ -68,7 +67,7 @@ export default function Index() {
         {/* How It Works Section */}
         <section className="py-16 bg-purple-50">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12">How Event Whisperer Works</h2>
+            <h2 className="text-3xl font-bold text-center mb-12">How TechEvent Hub Works</h2>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="bg-white p-6 rounded-lg shadow-sm text-center">
                 <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -97,7 +96,7 @@ export default function Index() {
                   </svg>
                 </div>
                 <h3 className="text-xl font-medium mb-2">Continuous Learning</h3>
-                <p className="text-gray-600">The more you use Event Whisperer, the better it gets at recommending events you'll love.</p>
+                <p className="text-gray-600">The more you use TechEvent Hub, the better it gets at recommending events you'll love.</p>
               </div>
             </div>
           </div>
@@ -140,7 +139,7 @@ export default function Index() {
         {/* CTA Section */}
         <section className="bg-gradient-to-r from-indigo-600 to-purple-700 text-white py-16">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold mb-4">Ready to Discover Events You'll Love?</h2>
+            <h2 className="text-3xl font-bold mb-4">Ready to Discover Tech Events You'll Love?</h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto">
               Create an account and start exploring events curated just for you.
             </p>

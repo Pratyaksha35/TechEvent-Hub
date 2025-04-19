@@ -21,11 +21,11 @@ export default function Footer() {
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
               </svg>
             </div>
-            <span className="font-bold text-xl">Event Whisperer</span>
+            <span className="font-bold text-xl">TechEvent Hub</span>
           </div>
           <p className="text-sm text-muted-foreground">
             Discover events tailored specifically to your interests and preferences.
-            Our AI-powered platform connects you with experiences you'll love.
+            Our AI-powered platform connects you with tech experiences you'll love.
           </p>
         </div>
 
@@ -57,7 +57,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="container mt-8 pt-8 border-t text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} Event Whisperer. All rights reserved.
+        © {new Date().getFullYear()} TechEvent Hub. All rights reserved.
       </div>
     </footer>
   );
