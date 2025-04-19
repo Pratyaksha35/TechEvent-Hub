@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useToast } from "@/components/ui/use-toast"; 
 import { Button } from "@/components/ui/button";
@@ -6,6 +5,14 @@ import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { FirecrawlService } from '@/utils/FirecrawlService';
 import { Card } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 interface CrawlResult {
   success: boolean;
@@ -74,8 +81,12 @@ export const CrawlForm = () => {
     }
   };
 
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleString();
+  };
+
   return (
-    <div className="w-full max-w-md mx-auto p-6 backdrop-blur-sm bg-white/30 dark:bg-black/30 rounded-lg shadow-lg border border-gray-200 dark:border-gray-800 transition-all duration-300 hover:shadow-xl">
+    <div className="space-y-6">
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-2">
           <label htmlFor="url" className="text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -86,7 +97,7 @@ export const CrawlForm = () => {
             type="url"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            className="w-full transition-all duration-200 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
+            className="w-full"
             placeholder="https://example.com"
             required
           />
@@ -97,31 +108,81 @@ export const CrawlForm = () => {
         <Button
           type="submit"
           disabled={isLoading}
-          className="w-full bg-gray-900 hover:bg-gray-800 text-white transition-all duration-200"
+          className="w-full"
         >
           {isLoading ? "Crawling..." : "Start Crawl"}
         </Button>
       </form>
 
       {crawlResult && (
-        <Card className="mt-6 p-4">
-          <h3 className="text-lg font-semibold mb-2">Crawl Results</h3>
-          <div className="space-y-2 text-sm">
-            <p>Status: {crawlResult.status}</p>
-            <p>Completed Pages: {crawlResult.completed}</p>
-            <p>Total Pages: {crawlResult.total}</p>
-            <p>Credits Used: {crawlResult.creditsUsed}</p>
-            <p>Expires At: {new Date(crawlResult.expiresAt || '').toLocaleString()}</p>
-            {crawlResult.data && (
-              <div className="mt-4">
-                <p className="font-semibold mb-2">Crawled Data:</p>
-                <pre className="bg-gray-100 dark:bg-gray-800 p-2 rounded overflow-auto max-h-60">
-                  {JSON.stringify(crawlResult.data, null, 2)}
-                </pre>
+        <div className="space-y-6">
+          <Card className="p-4">
+            <h3 className="text-lg font-semibold mb-4">Crawl Summary</h3>
+            <Table>
+              <TableBody>
+                <TableRow>
+                  <TableCell className="font-medium">Status</TableCell>
+                  <TableCell>{crawlResult.status}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Completed Pages</TableCell>
+                  <TableCell>{crawlResult.completed}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Total Pages</TableCell>
+                  <TableCell>{crawlResult.total}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Credits Used</TableCell>
+                  <TableCell>{crawlResult.creditsUsed}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Expires At</TableCell>
+                  <TableCell>{formatDate(crawlResult.expiresAt || '')}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </Card>
+
+          {crawlResult.data && crawlResult.data.length > 0 && (
+            <Card className="p-4">
+              <h3 className="text-lg font-semibold mb-4">Scraped Data</h3>
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Title</TableHead>
+                      <TableHead>Content</TableHead>
+                      <TableHead>URL</TableHead>
+                      <TableHead>Type</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {crawlResult.data.map((item, index) => (
+                      <TableRow key={index}>
+                        <TableCell className="font-medium">{item.title || 'N/A'}</TableCell>
+                        <TableCell className="max-w-md truncate">
+                          {item.content?.substring(0, 100) || 'N/A'}...
+                        </TableCell>
+                        <TableCell className="max-w-xs truncate">
+                          <a 
+                            href={item.url} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-blue-600 hover:underline"
+                          >
+                            {item.url}
+                          </a>
+                        </TableCell>
+                        <TableCell>{item.type || 'N/A'}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
               </div>
-            )}
-          </div>
-        </Card>
+            </Card>
+          )}
+        </div>
       )}
     </div>
   );
